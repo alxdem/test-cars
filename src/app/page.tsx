@@ -12,9 +12,7 @@ export default async function Home({searchParams}: {
 }) {
     const urlParams = await searchParams;
 
-    let data = [];
-
-    data = await getData({
+    const data = await getData({
         page: urlParams[PRODUCT_PARAMS.page] ?? '1',
         sort: urlParams[PRODUCT_PARAMS.sort] ?? '',
         order: urlParams[PRODUCT_PARAMS.order] ?? 'asc',
