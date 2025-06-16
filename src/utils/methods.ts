@@ -1,6 +1,10 @@
-import {Params} from '@/models';
+import {Params, SearchParam} from '@/models';
 
-export default async function getData(params: Params) {
+export function formatParams(value: SearchParam, fallback: string): string {
+    return Array.isArray(value) ? value[0] : value ?? fallback;
+}
+
+export async function getData(params: Params) {
     const LIMIT = 12;
     const {
         page = '1',

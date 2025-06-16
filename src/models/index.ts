@@ -1,6 +1,7 @@
 import {ChangeEvent} from 'react';
 
 type SortOrder = 'asc' | 'desc' | '';
+export type SearchParam = string | string[] | undefined;
 
 export interface Params {
     page: string;
@@ -30,7 +31,7 @@ export interface Product {
 }
 
 export interface SearchParams {
-    [key: string]: string | undefined;
+    [key: string]: SearchParam;
 }
 
 export type OnPageChange = (

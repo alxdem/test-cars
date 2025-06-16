@@ -1,11 +1,11 @@
 import {Product, SearchParams} from '@/models';
-import getData from '@/lib/getData';
 import AppSelect from '@/components/AppSelect/AppSelect';
 import {SELECT_SORT, PRODUCT_PARAMS} from '@/utils/variables';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import ProductList from '@/components/ProductList/ProductList';
 import AppPagination from '@/components/AppPagination/AppPagination';
+import {formatParams, getData} from '@/utils/methods';
 
 export default async function Home({searchParams}: {
     searchParams: SearchParams,
@@ -13,9 +13,9 @@ export default async function Home({searchParams}: {
     const urlParams = await searchParams;
 
     const data = await getData({
-        page: urlParams[PRODUCT_PARAMS.page] ?? '1',
-        sort: urlParams[PRODUCT_PARAMS.sort] ?? '',
-        order: urlParams[PRODUCT_PARAMS.order] ?? 'asc',
+        page: formatParams(urlParams[PRODUCT_PARAMS.page], '1'),
+        sort: formatParams(urlParams[PRODUCT_PARAMS.sort], ''),
+        order: formatParams(urlParams[PRODUCT_PARAMS.order],'asc'),
     });
 
     const products: Product[] = data.data || [];
