@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import {formatParams} from '@/utils/methods';
 import ProductSection from '@/components/ProductSection/ProductSection';
 import {Suspense} from 'react';
+import SkeletonList from '@/components/SkeletonList/SkeletonList';
 
 export default async function Home({searchParams}: {
     searchParams: SearchParams,
@@ -61,7 +62,7 @@ export default async function Home({searchParams}: {
                         items={SELECT_SORT}
                     />
                 </Paper>
-                <Suspense fallback={<p>Загрузка...</p>}>
+                <Suspense fallback={<SkeletonList/>}>
                     <ProductSection
                         key={productKey}
                         page={page}
