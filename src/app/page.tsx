@@ -1,25 +1,21 @@
-import {Product, SearchParams} from '@/models';
+import {SearchParams} from '@/models';
 import AppSelect from '@/components/AppSelect/AppSelect';
 import {SELECT_SORT, PRODUCT_PARAMS} from '@/utils/variables';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import ProductList from '@/components/ProductList/ProductList';
-import AppPagination from '@/components/AppPagination/AppPagination';
-import {getData, formatParams} from '@/utils/methods';
+import {formatParams} from '@/utils/methods';
+import ProductSection from '@/components/ProductSection/ProductSection';
+import {Suspense} from 'react';
 
 export default async function Home({searchParams}: {
     searchParams: SearchParams,
 }) {
     const resolvedParams = await searchParams;
 
-    const data = await getData({
-        page: formatParams(resolvedParams[PRODUCT_PARAMS.page], '1'),
-        sort: formatParams(resolvedParams[PRODUCT_PARAMS.sort], ''),
-        order: formatParams(resolvedParams[PRODUCT_PARAMS.order],'asc'),
-    });
-
-    const products: Product[] = data.data || [];
-    const {page, last_page} = data.meta || {};
+    const page = formatParams(resolvedParams[PRODUCT_PARAMS.page], '1');
+    const sort = formatParams(resolvedParams[PRODUCT_PARAMS.sort], '');
+    const order = formatParams(resolvedParams[PRODUCT_PARAMS.order],'asc');
+    const productKey = `key-${page}-${sort}-${order}`;
 
     return (
         <Box
@@ -65,11 +61,14 @@ export default async function Home({searchParams}: {
                         items={SELECT_SORT}
                     />
                 </Paper>
-                <ProductList products={products}/>
-                <AppPagination
-                    count={last_page}
-                    page={page}
-                />
+                <Suspense fallback={<p>Загрузка...</p>}>
+                    <ProductSection
+                        key={productKey}
+                        page={page}
+                        sort={sort}
+                        order={order}
+                    />
+                </Suspense>
             </Box>
         </Box>
     );
