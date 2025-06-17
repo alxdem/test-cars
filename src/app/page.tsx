@@ -5,17 +5,17 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import ProductList from '@/components/ProductList/ProductList';
 import AppPagination from '@/components/AppPagination/AppPagination';
-import {formatParams, getData} from '@/utils/methods';
+import {getData, formatParams} from '@/utils/methods';
 
 export default async function Home({searchParams}: {
     searchParams: SearchParams,
 }) {
-    const urlParams = await searchParams;
+    const resolvedParams = await searchParams;
 
     const data = await getData({
-        page: formatParams(urlParams[PRODUCT_PARAMS.page], '1'),
-        sort: formatParams(urlParams[PRODUCT_PARAMS.sort], ''),
-        order: formatParams(urlParams[PRODUCT_PARAMS.order],'asc'),
+        page: formatParams(resolvedParams[PRODUCT_PARAMS.page], '1'),
+        sort: formatParams(resolvedParams[PRODUCT_PARAMS.sort], ''),
+        order: formatParams(resolvedParams[PRODUCT_PARAMS.order],'asc'),
     });
 
     const products: Product[] = data.data || [];

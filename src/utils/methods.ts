@@ -1,9 +1,5 @@
 import {Params, SearchParam} from '@/models';
 
-export function formatParams(value: SearchParam, fallback: string): string {
-    return Array.isArray(value) ? value[0] : value ?? fallback;
-}
-
 export async function getData(params: Params) {
     const LIMIT = 12;
     const {
@@ -34,4 +30,8 @@ export async function getData(params: Params) {
         console.error(err);
         return err;
     }
+}
+
+export function formatParams(value: SearchParam, fallback: string): string {
+    return Array.isArray(value) ? value[0] : value ?? fallback;
 }
